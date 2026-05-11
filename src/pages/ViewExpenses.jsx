@@ -1,4 +1,3 @@
-import Sidebar from "../Components/Sidebar";
 import SummaryCards from "../Components/SummaryCards";
 import TopBar from "../Components/TopBar";
 import Filters from "../Components/Filters";
@@ -8,9 +7,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function ViewExpenses() {
-  /* =========================
+  /*
         STATES
-  ========================== */
+ */
 
   const [expenses, setExpenses] = useState([]);
 
@@ -20,6 +19,7 @@ export default function ViewExpenses() {
     category: "All Categories",
     status: "All",
     date: "All Time",
+    search: "",
   });
 
   const [summary, setSummary] = useState({
@@ -27,10 +27,6 @@ export default function ViewExpenses() {
     pendingApprovals: 0,
     remainingBudget: 0,
   });
-
-  /* =========================
-        FILTER ARRAYS
-  ========================== */
 
   const categories = [
     "All Categories",
@@ -47,10 +43,6 @@ export default function ViewExpenses() {
     "Last 3 Months",
   ];
 
-  /* =========================
-        FETCH EXPENSES
-  ========================== */
-
   const fetchExpenses = async () => {
     try {
       const response = await axios.get("http://localhost:5000/api/expenses");
@@ -62,10 +54,6 @@ export default function ViewExpenses() {
       console.log(error);
     }
   };
-
-  /* =========================
-        FETCH SUMMARY
-  ========================== */
 
   const fetchSummary = async () => {
     try {
@@ -79,22 +67,31 @@ export default function ViewExpenses() {
     }
   };
 
-  /* =========================
-        INITIAL LOAD
-  ========================== */
-
   useEffect(() => {
     fetchExpenses();
 
     fetchSummary();
   }, []);
 
-  /* =========================
+  /*
         FILTER LOGIC
-  ========================== */
+  */
 
   useEffect(() => {
     let updated = [...expenses];
+
+    if (filters.search.trim() !== "") {
+      updated = updated.filter((item) => {
+        const searchText = filters.search.toLowerCase();
+
+        return (
+          item.title?.toLowerCase().includes(searchText) ||
+          item.subtitle?.toLowerCase().includes(searchText) ||
+          item.category?.toLowerCase().includes(searchText) ||
+          item.status?.toLowerCase().includes(searchText)
+        );
+      });
+    }
 
     /* CATEGORY FILTER */
 
@@ -157,16 +154,20 @@ export default function ViewExpenses() {
     setFilteredExpenses(updated);
   }, [filters, expenses]);
 
-  /* =========================
+  /*
         JSX
-  ========================== */
+ */
 
   return (
     <div className="dashboard">
-      <Sidebar />
+      {/* <Sidebar /> */}
 
       <div className="main-content">
-        <TopBar />
+        <TopBar
+          search={filters.search}
+          setFilters={setFilters}
+          filters={filters}
+        />
 
         <div className="content">
           {/* HEADING */}
