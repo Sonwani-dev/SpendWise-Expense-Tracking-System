@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@source "../index.html";
+@source "../src/**/*.{js,ts,jsx,tsx}";
+
+@theme {
+  --color-primary: #0444d4;
+  --color-primary-hover: #0336a6;
+  --color-sidebar-activeBg: #e6efff;
+  --color-sidebar-activeText: #0444d4;
+  --color-chart-operations: #0444d4;
+  --color-chart-marketing: #b1c7fb;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+}
