@@ -1,24 +1,6 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import ExpenseRow from "./ExpenseRow";
 
-function ExpenseTable() {
-  const [expenses, setExpenses] = useState([]);
-
-  useEffect(() => {
-    fetchExpenses();
-  }, []);
-
-  const fetchExpenses = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/expenses");
-
-      setExpenses(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+function ExpenseTable({ expenses }) {
   return (
     <div className="table-container">
       <table>

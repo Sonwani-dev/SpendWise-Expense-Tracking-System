@@ -1,4 +1,4 @@
-function SummaryCards({ summary, value, pbar }) {
+function SummaryCards({ summary, value, pbar, progress }) {
   return (
     <div className="card">
       <p>{summary}</p>
@@ -6,7 +6,12 @@ function SummaryCards({ summary, value, pbar }) {
 
       {pbar && (
         <div className="progress-bar">
-          <div className="progress"></div>
+          <div
+            className="progress"
+            style={{
+              width: `${progress}%`,
+            }}
+          ></div>
         </div>
       )}
     </div>

@@ -13,9 +13,7 @@ function ExpenseRow({ item }) {
       <td>{item.date}</td>
 
       <td>
-        <span className={`status ${item.status.toLowerCase()}`}>
-          {item.status}
-        </span>
+        <span className={`status ${item.status}`}>{item.status}</span>
       </td>
 
       <td className="amount">{item.amount}</td>
